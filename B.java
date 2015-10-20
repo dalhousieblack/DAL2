@@ -35,27 +35,31 @@ public class B {
 	int minlen=a.length();;
 	char ret[]=new char[len];
 	int verse[]=new int[len];
-	int inverse[]=new int[len];
+	//	int inverse[]=new int[len];
 	for (int i=0;i<minlen;i++) {
 	    verse[i]=(int)((a.charAt(i)-b.charAt(i)));
 	    if (verse[i]<0) verse[i]+=26;
-	    inverse[i]=(int)((a.charAt(i)-b.charAt(i)));
-	    if (inverse[i]<0) inverse[i]+=26;
+	    //  inverse[i]=(int)((a.charAt(i)-b.charAt(i)));
+	    //if (inverse[i]<0) inverse[i]+=26;
 	    //out.println(verse[i]);
 	}
 
 	//check to see if any entry in ops is = to verse or inverse
-	boolean invworks=true;
+	//boolean invworks=true;
 	boolean verworks=true;
 	int i=0;
-	int lenindex;
-	int bigindex;
+	int lenindex=-1;
+	int bigindex=-1;
 	if (minlen>=7 && minlen <=9) {
 	    lenindex=minlen-7;
+	}
+	if (len>=7 && len <=9) {
 	    bigindex=len-7;
 	}
-	else{
+	if (minlen>9 ) {
 	    lenindex=minlen-8;
+	}
+	if (len>9) {
 	    bigindex=len-8;
 	}
 	int gf=revsum(indices[lenindex]);//summation(12)-summation(12-indices[lenindex]);
@@ -70,54 +74,55 @@ public class B {
 		    reset=0;
 		    continue;
 		}
-		invworks=true;
+		//		invworks=true;
 		verworks=true;
-		out.println(i+" "+indices[lenindex]+" "+bigindex);
-		for (int j=0;j<minlen && (invworks||verworks);j++) {
-		    out.print(ops[i][j]+" "+verse[j]+",");
+		//out.println(i+" "+indices[lenindex]+" "+bigindex);
+		for (int j=0;j<minlen && (verworks);j++) {//(invworks||verworks);j++) {
+		    //		    out.print(ops[i][j]+" "+verse[j]+",");
 		    if (verse[j]!=ops[i][j]) verworks=false;
-		    if (inverse[j]!=ops[i][j]) invworks=false;
+		    //		    if (inverse[j]!=ops[i][j]) invworks=false;
 		}
 		
-		if (verworks || invworks) break;
+		if (verworks ) break;//|| invworks) break;
 		reset++;
 	    }
 
 
 	    //time to reverse engineer the word
 	    int df=indices[bigindex]+reset;//firstindex(i,ops.length);
-	if (verworks) {
-	    //out.println("ayyver "+df);	
-	    out.println(orig[df]);    
-	    for (int d=0;d<len;d++) {
+	    if (verworks) {
+		//out.println("ayyver "+df);	
+		//		out.println(orig[df]+" "+reset+ " "+bigindex+" "+len);    
+		for (int d=0;d<len;d++) {
 
-		int diff=-((int)orig[df].charAt(d)-(int)b.charAt(d));
-		//(int)orig[df].charAt(d)-(int)b.charAt(d);
-		//System.out.print(orig[df].charAt(d)+" "+b.charAt(d)+" "+(int)diff+ " \n");
-		if (diff<0) diff+=26;
-		
+		    int diff=-((int)orig[df].charAt(d)-(int)b.charAt(d));
+		    //(int)orig[df].charAt(d)-(int)b.charAt(d);
+		    //System.out.print(orig[df].charAt(d)+" "+b.charAt(d)+" "+(int)diff+ " \n");
+		    if (diff<0) diff+=26;
+		    
+		    ret[d]=(char)(diff+(int)'a');
+		    //System.out.print((int)ret[d]+ " ");
+		    
+		}
+	    }
+	    /*
+	    else if (invworks) {
+		// out.println("ayyinver");
+		for (int d=0;d<len;d++) {
+		    int diff=-((int)orig[df].charAt(d)-(int)b.charAt(d));
+		    //(int)orig[df].charAt(d)-(int)a.charAt(d);
+		    if (diff<0) diff+=26;
+		    
 		ret[d]=(char)(diff+(int)'a');
 		//System.out.print((int)ret[d]+ " ");
-		
-	    }
-	    }
-	else if (invworks) {
-	    // out.println("ayyinver");
-	    for (int d=0;d<len;d++) {
-		int diff=-((int)orig[df].charAt(d)-(int)b.charAt(d));
-		//(int)orig[df].charAt(d)-(int)a.charAt(d);
-		if (diff<0) diff+=26;
-		
-		ret[d]=(char)(diff+(int)'a');
-		//System.out.print((int)ret[d]+ " ");
-	    }
+		}*/
 	    
-	}
+    
     
 	
     
-    else {ret[0]='\0';}
-	return ret;
+	    else {ret[0]='\0';}
+	    return ret;
     }
     /*;
       for (int j=0;j<len;j++) {
