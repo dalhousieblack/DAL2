@@ -231,7 +231,7 @@ public class B {
 	    }
 	    else {
 		//
-		out.println(new String(ret));
+		out.println("Key = "+ new String(ret));
 	    }
 	
 	   
