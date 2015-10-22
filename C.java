@@ -57,7 +57,9 @@ public class C {
 				
 			    }
 			}
-
+			if (input.hasNextLine()) {
+			    input.nextLine(); //reset buffer
+			}
 
 		}
 
@@ -244,7 +246,11 @@ public class C {
 
 
 	static int distance(int sx, int sy, int ex, int ey) {
-		return (sx-ex)*(sx-ex) + (sy-ey)*(sy-ey);
+	    //instead of using pythagorean distance, will instead use the least distance possible to get to the point
+	    //i.e. a+b, instead of a^2+b^2
+
+	    return Math.abs(sx-ex)+Math.abs(sy-ey);
+	    //		return (sx-ex)*(sx-ex) + (sy-ey)*(sy-ey);
 	}
 
     static boolean safe(Character[][] board, int x, int y, boolean okmap[][]) {
